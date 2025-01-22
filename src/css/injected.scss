@@ -1,0 +1,10 @@
+@use "sass:meta";
+
+//import some-file.scss
+//@include meta.load-css("some-file.scss");
+
+:root {
+  background: var(--better-main) !important;
+  --navy: #1a1a1a !important;
+  --auto-background: var(--better-pale, var(--background-secondary)) !important;
+}
