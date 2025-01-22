@@ -18,6 +18,35 @@
 // loaded as soon as possible
 @use 'injected/popup.scss';
 
-.closeLoading {
-  display: none;
+html {
+  background: #161616 !important;
+  background-color: #161616;
+  font-family: Rubik, Roboto !important;
+}
+
+.addedButton {
+  position: relative !important;
+  background-color: transparent;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  left: 8px;
+  pointer-events: auto;
+  top: 8px;
+  transition: all .3s cubic-bezier(0.4,0,0.2,1);
+  width: 40px;
+  border: unset;
+  cursor: pointer;
+  
+  &:hover {
+    background-color: #E7E9EC;
+    transition: background-color 0.2s ease-in-out;
+  }
+
+  svg {
+    color: #5F6367;
+    height: 60%;
+  }
 }
