@@ -6,6 +6,7 @@ export interface PopupOptions {
   title: string;
   subtitle?: string;
   content: string | HTMLElement;
+  imageContent?: HTMLElement;
   footer?: string | HTMLElement;
   animationEnabled?: boolean;
   onClose?: () => void;
@@ -53,6 +54,18 @@ export class Popup {
       </div>
     `).firstChild as HTMLElement;
 
+    // Create image container (if provided)
+    if (this.options.imageContent) {
+      const imageContainer = document.createElement('div');
+      imageContainer.classList.add('whatsnewImgContainer');
+      imageContainer.append(this.options.imageContent);
+      container.append(imageContainer);
+    }
+
+    // Create text container
+    const textContainer = document.createElement('div');
+    textContainer.classList.add('whatsnewTextContainer');
+
     // Add content
     const content = typeof this.options.content === 'string' 
       ? stringToHTML(this.options.content).firstChild as HTMLElement
@@ -71,13 +84,21 @@ export class Popup {
 
     // Assemble popup
     container.append(header);
-    container.append(content);
+    if (this.options.imageContent) {
+      const imageContainer = document.createElement('div');
+      imageContainer.classList.add('whatsnewImgContainer');
+      imageContainer.append(this.options.imageContent);
+      container.append(imageContainer);
+    }
+    textContainer.append(content);
+    container.append(textContainer);
     container.append(footer);
     container.append(closeButton);
     background.append(container);
 
-    // Add to DOM
-    document.querySelector('body > div:has([role="button"])')!.append(background);
+    // Add to DOM - find the appropriate container
+    const targetContainer = document.querySelector('body > div:has([role="button"])') || document.body;
+    targetContainer.append(background);
 
     // Setup event listeners
     if (this.options.closeOnBackgroundClick) {
@@ -166,17 +187,21 @@ export class Popup {
     }
 
     if (this.options.destroyOnClose) {
-      await this.destroy();
+      this.element.remove();
+      this.isDestroyed = true;
+      this.element = null;
+      this.container = null;
     }
   }
 
   public async destroy(): Promise<void> {
     if (this.isDestroyed || !this.element) return;
-
-    await this.hide();
-    this.element.remove();
-    this.isDestroyed = true;
-    this.element = null;
-    this.container = null;
+    
+    if (!this.isDestroyed) {
+      this.element.remove();
+      this.isDestroyed = true;
+      this.element = null;
+      this.container = null;
+    }
   }
 } 

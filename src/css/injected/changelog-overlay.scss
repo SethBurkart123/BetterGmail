@@ -1,14 +1,3 @@
-@use "sass:meta";
-
-@include meta.load-css("injected/changelog-overlay.scss");
-@include meta.load-css("injected/theme.scss");
-
-:root {
-  background: var(--better-main) !important;
-  --navy: #1a1a1a !important;
-  --auto-background: var(--better-pale, var(--background-secondary)) !important;
-}
-
 .whatsnewContainer {
   position: absolute;
   width: 38em;
@@ -33,12 +22,10 @@
 
     h1 {
       font-size: 2em;
-      margin: 0;
     }
 
     p {
       font-size: 1em;
-      margin: 0;
       color: var(--text-primary);
     }
   }
@@ -62,7 +49,6 @@
     flex-direction: column;
     width: 90%;
     margin: 5px auto;
-    padding-bottom: 30px;
 
     li {
       margin: 2px 0;
@@ -95,13 +81,16 @@
 
   .whatsnewTextHeader {
     font-size: 1.4em !important;
+    margin-block-start: 0;
+    margin-block-end: 0;
     color: #4dd868;
     font-weight: 600;
     width: fit-content;
     position: relative;
-    
+
     &::after {
       content: "";
+      margin: 0;
       width: 160%;
       height: 2px;
       background: #4dd868;
